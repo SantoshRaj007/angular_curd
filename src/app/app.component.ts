@@ -14,6 +14,7 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -99,6 +101,20 @@ export class AppComponent implements OnInit{
           this.getEmployeeList();
         },
         error: console.log,
+      });
+    }
+
+    openEditForm(data: any) {
+      const dialogRef = this._dialog.open(EmpAddEditComponent,{
+        data,
+      });
+
+      dialogRef.afterClosed().subscribe({
+        next: (val) => {
+          if (val) {
+            this.getEmployeeList();
+          }
+        },
       });
     }
 }
